@@ -1,0 +1,52 @@
+const int redPin = 13;
+const int greenPin = 11;
+const int bluePin = 12;
+const int buttonPin = 7;
+
+bool buttonState = false;
+bool lastButtonState = false;
+bool ledOn = false;
+int ledState = 0;
+
+void setup() {
+  pinMode(redPin, OUTPUT);
+  pinMode(greenPin, OUTPUT);
+  pinMode(bluePin, OUTPUT);
+  pinMode(buttonPin, INPUT);
+  
+  digitalWrite(redPin, HIGH);
+  digitalWrite(greenPin, LOW);
+  digitalWrite(bluePin, LOW);
+}
+
+void loop() {
+  buttonState = digitalRead(buttonPin);
+  if (buttonState != lastButtonState && buttonState == HIGH) {
+    ledState++;
+    if (ledState > 2) {
+      ledState = 0;
+    }
+    updateLED();
+  }
+  lastButtonState = buttonState;
+}
+
+void updateLED() {
+  digitalWrite(redPin, LOW);
+  digitalWrite(greenPin, LOW);
+  digitalWrite(bluePin, LOW);
+
+  if (ledState == 0) {
+    digitalWrite(redPin, HIGH);
+    digitalWrite(greenPin, LOW);
+    digitalWrite(bluePin, LOW);
+  } else if (ledState == 1) {
+    digitalWrite(redPin, LOW);
+    digitalWrite(greenPin, HIGH);
+    digitalWrite(bluePin, LOW);
+  } else if (ledState == 2) {
+    digitalWrite(redPin, LOW);
+    digitalWrite(greenPin, LOW);
+    digitalWrite(bluePin, HIGH);
+  }
+}
